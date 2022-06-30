@@ -8,6 +8,8 @@ PATTERN_EMPTYLINE = re.compile(r"\s*\n")
 DELAY = 0.5 # 0.5 second between 2 videos
 srts = sorted([file for file in os.listdir() if file.endswith(".srt") and file!="output.srt" ])
 
+OUTPUT_FILE = "output.srt"
+
 offset_index = 0
 offset_timestamp = timedelta()
 output = []
@@ -47,7 +49,8 @@ for srt in srts:
         offset_index = i
         offset_timestamp = timedelta(hours=end.hour,minutes=end.minute,seconds=end.second+DELAY,microseconds=end.microsecond)
 
-with open("output.srt","w") as f:
+with open(OUTPUT_FILE,"w") as f:
+    print("Write to [{}]".format(OUTPUT_FILE))
     f.writelines(output)
     
 
