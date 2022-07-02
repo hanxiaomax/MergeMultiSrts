@@ -6,7 +6,9 @@ PATTERN_INDEX = re.compile(r"^\d{1,3}$" )
 PATTERN_TIMESTAMP = re.compile(r"(?P<start>\d{2}:\d{2}:\d{2},\d{3})\s*-->\s*(?P<end>\d{2}:\d{2}:\d{2},\d{3})")
 PATTERN_EMPTYLINE = re.compile(r"\s*\n")
 DELAY = 0.5 # 0.5 second between 2 videos
-srts = sorted([file for file in os.listdir() if file.endswith(".srt") and file!="output.srt" ])
+srts = [file for file in os.listdir() if file.endswith(".srt") and file!="output.srt" ]
+srts.sort(key=lambda x:int(x.split("-")[0]))
+
 
 OUTPUT_FILE = "output.srt"
 
@@ -24,10 +26,10 @@ for srt in srts:
             timestamp = re.match(PATTERN_TIMESTAMP,line)
             if index:
                 if not flag:
-                    print("+++++ERROR+++++")
+                    print("+++++Warning+++++")
                     print("Gobal index: {} \nLocal index: {}".format(i,index.group()))
                     print(output[-3:])
-                    print("+++++ERROR+++++")
+                    print("+++++Warning+++++")
                 i = int(index.group()) + offset_index
                 output.append(str(i)+"\n")
                 flag = False
