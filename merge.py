@@ -23,7 +23,7 @@ def parse(srts):
                 index = re.match(PATTERN_INDEX,line)
                 timestamp = re.match(PATTERN_TIMESTAMP,line)
                 if index and not isfirst:
-                    output.append((shifted_timestamp.strip(),sub.strip())) # save last group and remove \n
+                    output.append((shifted_timestamp.strip(),sub.strip())) # save prev group and remove \n
                     _type = "INDEX"
                     i = index.group()
                 elif timestamp:
@@ -46,7 +46,7 @@ def parse(srts):
                     sub = line 
                     isfirst = False
                     _type = "SUB"
-            
+            output.append((shifted_timestamp.strip(),sub.strip())) # save last group and remove \n
             # save the end timestamp of last srt file. it will be the offset of next one
             offset_timestamp = timedelta(hours=end.hour,
                                                                         minutes=end.minute,
